@@ -6,12 +6,12 @@ const textarea = document.querySelector('[name="message"]')
 const LOCALST_KEY = "feedback-form-state";
 
 form.addEventListener('input', throttle(onInput, 500));
-    function onInput(event) {
+function onInput(event) {
     const data = JSON.parse(localStorage.getItem('feedback-form-state')) || {}
     data[event.target.name] = event.target.value;
     localStorage.setItem('feedback-form-state', JSON.stringify(data))
-        console.log("data on input" + data)
-        
+    console.log("data on input" + data)
+}      
 form.addEventListener('submit', onSubmit);
 function onSubmit() {
     if (!email.value || !textarea.value) {
