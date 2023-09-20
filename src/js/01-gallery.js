@@ -12,7 +12,7 @@ const galleryEl = document.querySelector(".gallery");
         <img class="gallery__image" src="${preview}" width="240" data-source="${original}" alt="${description}"></a></li>`)
         .join("");
     
-    galleryEl.insertAdjacentElement('beforeend', markup);
+    galleryEl.insertAdjacentHTML('beforeend', markup);
 
 var lightbox = new SimpleLightbox('.gallery a', {
     captions: true,
