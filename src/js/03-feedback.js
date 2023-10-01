@@ -28,7 +28,7 @@ function onSubmit() {
             const dataOn = JSON.parse(localStorage.getItem('feedback-form-state'))
             console.log(dataOn)
             if (dataOn) {
-                textarea.value = dataOn.message ? dataOn.message : '';
-                email.value = dataOn.email
+                textarea.value = dataOn.message || '';
+                email.value = dataOn.email || ""
             }
         }
