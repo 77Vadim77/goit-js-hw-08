@@ -10,7 +10,7 @@ function onInput(event) {
     const data = JSON.parse(localStorage.getItem('feedback-form-state')) || {}
     data[event.target.name] = event.target.value;
     localStorage.setItem('feedback-form-state', JSON.stringify(data))
-
+    console.log("data on input" + data)
 }      
 form.addEventListener('submit', onSubmit);
 function onSubmit() {
@@ -26,7 +26,7 @@ function onSubmit() {
         window.addEventListener('load', onLoad);
         function onLoad() {
             const dataOn = JSON.parse(localStorage.getItem('feedback-form-state'))
-
+            console.log(dataOn)
             if (dataOn) {
                 textarea.value = dataOn.message || '';
                 email.value = dataOn.email || ""
