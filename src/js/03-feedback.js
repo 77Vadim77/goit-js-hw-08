@@ -26,7 +26,7 @@ function onSubmit() {
         window.addEventListener('load', onLoad);
         function onLoad() {
             const dataOn = JSON.parse(localStorage.getItem('feedback-form-state'))
-            console.log(dataOn)
+            
             if (dataOn) {
                 textarea.value = dataOn.message || '';
                 email.value = dataOn.email || ""
