@@ -1,34 +1,40 @@
 import throttle from 'lodash.throttle';
 
 const form = document.querySelector(".feedback-form");
-const email = document.querySelector('[name="email"]')
-const textarea = document.querySelector('[name="message"]')
-const LOCALST_KEY = "feedback-form-state";
+const email = document.querySelector('input');
+const message = document.querySelector('textarea');
 
-form.addEventListener('input', throttle(onInput, 500));
-function onInput(event) {
-    const data = JSON.parse(localStorage.getItem('feedback-form-state')) || {}
-    data[event.target.name] = event.target.value;
-    localStorage.setItem('feedback-form-state', JSON.stringify(data))
-    console.log("data on input" + data)
-}      
-form.addEventListener('submit', onSubmit);
-function onSubmit() {
-    if (!email.value || !textarea.value) {
-        alert ("Будь ласка, заповніть усі поля")
+form.addEventListener("input", throttle(onInputChange, 500));
+form.addEventListener("submit", onFormSubmit);
+
+const STORAGE_KEY = "feedback-form-state";
+const savedValue = localStorage.getItem(STORAGE_KEY);
+const parsedValue = JSON.parse(savedValue);
+const formData = { ...parsedValue };
+
+getLocaleStorage();
+
+function onInputChange(evt) {
+    formData[evt.target.name] = evt.target.value;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+}
+
+function onFormSubmit(evt) {
+    evt.preventDefault();
+    if (!email.value || !message.value) {
+      return alert('Please fill in all the fields!');
     }
-    else {
-        console.log(`email: ${email.value} massage: ${textarea.value}`)
-        localStorage.removeItem('feedback-form-state');
-        reset(form);
-    }
-};
-        window.addEventListener('load', onLoad);
-        function onLoad() {
-            const dataOn = JSON.parse(localStorage.getItem('feedback-form-state'))
-            
-            if (dataOn) {
-                textarea.value = dataOn.message || '';
-                email.value = dataOn.email || ""
-            }
-        }
+    evt.target.reset();
+    localStorage.removeItem(STORAGE_KEY);
+    console.log(formData);
+    formData.email = '';
+    formData.message = '';
+}
+
+function getLocaleStorage() {
+  if (savedValue) {
+    parsedValue.email === undefined ? email.value = "" : email.value = parsedValue.email;
+    parsedValue.message === undefined ? message.value = "" : message.value = parsedValue.message;
+      
+  }
+}
